@@ -544,4 +544,23 @@ class Item
             array_push($this->nodes['additional_image_link'], $node->value($imagesLink)->_namespace($this->namespace)->addCdata()); 
         }   
     }
+    
+    /**
+     * Add tax to item
+     * 
+     * @param string $code i.e 'US'
+     * @param string $region i.e 'CA'
+     * @param float $rate The tax rate
+     * @param string $tax_ship 'yes' or 'no'
+     */
+    public function tax($code, $region, $rate, $tax_ship)
+    {
+        $node = new Node('tax');
+        $value = "<g:country>{$code}</g:country><g:region>{$region}</g:region><g:rate>{$rate}</g:rate><g:tax_ship>{$tax_ship}</g:tax_ship>";
+
+        if (!isset($this->nodes['tax'])) {
+            $this->nodes['tax'] = array();
+        }
+        $this->nodes['tax'][] = $node->value($value)->_namespace($this->namespace);
+    }
 }
